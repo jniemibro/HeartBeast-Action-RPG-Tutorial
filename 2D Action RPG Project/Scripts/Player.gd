@@ -33,6 +33,10 @@ func _process(delta):
 		ATTACK:
 			attack_state(delta)
 	# move_and_slide uses delta automatically
+	#velocity = move_and_slide(velocity)
+	
+func _physics_process(_delta):
+	# move_and_slide uses delta automatically
 	velocity = move_and_slide(velocity)
 	
 func move_state(delta):
