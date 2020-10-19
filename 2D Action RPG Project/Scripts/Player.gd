@@ -19,8 +19,12 @@ onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
 	animationTree.active = true
+	# match default blend pos for all anim states on start
+	animationTree.set("parameters/Idle/blend_position", Vector2.ZERO)
+	animationTree.set("parameters/Run/blend_position", Vector2.ZERO)
+	animationTree.set("parameters/Attack/blend_position", Vector2.ZERO)
 
-func _physics_process(delta):
+func _process(delta):
 	match state:
 		MOVE:
 			move_state(delta)
@@ -57,9 +61,12 @@ func attack_state(delta):
 	# smoothly slow down
 	velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	#velocity = Vector2.ZERO
+	
 	animationState.travel("Attack")
+	# alternative to end state?
 	#if animationState.get_current_node() != "Attack":
 	#	state = MOVE
 
+# called from animations
 func attack_anim_finished():
 	state = MOVE
